@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="skills")
-public class Skills{
+public class Skills {
+
     @Id
-    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
 
     @Column(name="skill")
@@ -15,7 +16,7 @@ public class Skills{
 
     @ManyToOne
     @JoinColumn(name = "people_id")
-    private People people_id;
+    private People people;
 
     public int getId() {
         return id;
@@ -25,19 +26,19 @@ public class Skills{
         this.id = id;
     }
 
-    public People getPeople_id() {
-        return people_id;
-    }
-
-    public void setPeople_id(People people_id) {
-        this.people_id = people_id;
-    }
-
     public String getSkill() {
         return skill;
     }
 
     public void setSkill(String skill) {
         this.skill = skill;
+    }
+
+    public People getPeople() {
+        return people;
+    }
+
+    public void setPeople(People people) {
+        this.people = people;
     }
 }

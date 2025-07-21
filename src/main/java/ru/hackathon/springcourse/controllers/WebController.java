@@ -10,7 +10,7 @@ import ru.hackathon.springcourse.models.People;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/go")
 public class WebController {
 
     private final PeopleDAO peopleDAO;
