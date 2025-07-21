@@ -15,16 +15,10 @@
         <div class="logo">HR-scaner</div>
         <div class="history">История</div>
         <ol class="history-list" id="historyList">
-            <li>1. Человек 67%</li>
-            <li>2. Человек 90%</li>
-            <li>3. Человек 24%</li>
-            <li>4. Человек 58%</li>
-            <li>5. Человек 72%</li>
-            <li>6. Человек 81%</li>
-            <li>7. Человек 34%</li>
-            <li>8. Человек 9%</li>
-            <li>9. Человек 12%</li>
-            <li>10. Человек 46%</li>
+            <li th:each="person, iterStat : ${peopleList}"
+                th:text="${iterStat.index + 1 + '. ' + person.name + ' ' + person.persent + '%'}">
+                1. Имя 0%
+            </li>
         </ol>
     </aside>
 

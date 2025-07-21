@@ -1,0 +1,9 @@
+{
+  "name": "Alice",
+  "job": "Engineer",
+  "persent": 90,
+  "skills": [
+    {"skill": "Java"},
+    {"skill": "Spring Boot"}
+  ]
+}
