@@ -20,10 +20,20 @@ public class WebController {
         this.peopleDAO = peopleDAO;
     }
 
+
     @GetMapping("")
-    public String workers(Model model) {
-        List<People> peopleList = peopleDAO.index();
-        model.addAttribute("peopleList", peopleList);
+    public String workers(@RequestParam(value = "job", required = false) String job, Model model) {
+        if(job != null) {
+            List<People> peopleList = peopleDAO.findByJob(job);
+            model.addAttribute("peopleList", peopleList);
+            model.addAttribute("job", job);
+
+        }
+        else {
+            List<People> peopleList = peopleDAO.index();
+            model.addAttribute("peopleList", peopleList);
+            model.addAttribute("job", job);
+        }
         return "index";
     }
 

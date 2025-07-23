@@ -34,12 +34,13 @@
         <div class="data-analytics">
             <div class="job-selector-container">
                 <label for="jobSelect">Выберите профессию:</label>
-                <select id="jobSelect" class="job-select">
-                    <option value="analyst" selected>Аналитик данных</option>
-                    <option value="developer">Менеджер в ИИ</option>
-                    <option value="designer">Технический аналитик в ИИ</option>
-                    <option value="manager">Инженер данных</option>
+                <select name="job" id="jobSelect" class="job-select">
+                    <option value="analyst" th:selected="${job == 'analyst'}">Аналитик данных</option>
+                    <option value="manager" th:selected="${job == 'manager'}">Менеджер в ИИ</option>
+                    <option value="tech_analyst" th:selected="${job == 'tech_analyst'}">Технический аналитик в ИИ</option>
+                    <option value="data_engineer" th:selected="${job == 'data_engineer'}">Инженер данных</option>
                 </select>
+
             </div>
             <div class="job-description-wrapper">
                 <div class="job-description" id="jobDescription">
@@ -68,7 +69,12 @@
         </div>
     </main>
 </div>
-
+<script>
+    document.getElementById('jobSelect').addEventListener('change', function () {
+        const job = this.value;
+        window.location.href = '/go?job=' + encodeURIComponent(job);
+    });
+</script>
 <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

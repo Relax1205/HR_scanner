@@ -23,7 +23,13 @@ public class PeopleDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<People> index(String job){
+    public List<People> index(){
+        return entityManager
+                .createQuery("SELECT p FROM People p", People.class)
+                .getResultList();
+    }
+
+    public List<People> findByJob(String job) {
         return entityManager
                 .createQuery("SELECT p FROM People p WHERE p.job = :job", People.class)
                 .setParameter("job", job)
