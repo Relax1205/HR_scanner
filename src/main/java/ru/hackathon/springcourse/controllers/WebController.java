@@ -26,4 +26,13 @@ public class WebController {
         model.addAttribute("peopleList", peopleList);
         return "index";
     }
+
+
+
+    @PostMapping("/{id}")
+    public String delete(@PathVariable("id") int id){
+        peopleDAO.delete(id);
+        return  "redirect:/go";
+
+    }
 }

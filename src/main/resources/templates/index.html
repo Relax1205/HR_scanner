@@ -15,9 +15,12 @@
         <div class="logo">HR-scaner</div>
         <div class="history">История</div>
         <ol class="history-list" id="historyList">
-            <li th:each="person, iterStat : ${peopleList}"
-                th:text="${iterStat.index + 1 + '. ' + person.name + ' ' + person.persent + '%'}">
-                1. Имя 0%
+            <li th:each="person, iterStat : ${peopleList}">
+                <span th:text="${iterStat.index + 1 + '. ' + person.name + ' ' + person.persent + '%'}">1. Имя 0%</span>
+                <form th:action="@{/go/{id}(id=${person.id})}" method="post" style="display:inline;">
+                    <input type="hidden" th:name="id" th:value="${person.id}" />
+                    <button type="submit">Удалить</button>
+                </form>
             </li>
         </ol>
     </aside>
