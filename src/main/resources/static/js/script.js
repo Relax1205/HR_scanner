@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loading.style.display = 'block';
         resultArea.style.display = 'none';
         resultArea.innerHTML = '';
+        hideSuccessMessage();
 
         let progress = 0;
         const progressInterval = setInterval(() => {
@@ -117,17 +118,30 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Ошибка анализа');
+                let errorMsg = 'Ошибка анализа';
+                try {
+                    const errorData = await response.json();
+                    errorMsg = errorData.error || errorMsg;
+                } catch (e) {
+                    // Если не удалось распарсить JSON — оставляем дефолтное сообщение
+                }
+                throw new Error(errorMsg);
             }
 
-            const result = await response.json();
+            let result;
+            try {
+                result = await response.json();
+            } catch (jsonErr) {
+                throw new Error('Ошибка разбора ответа сервера. Возможно, сервер вернул невалидный JSON или пустой ответ.');
+            }
             console.log('Received analysis:', result);
 
             loading.style.display = 'none';
             resultArea.style.display = 'block';
             
-            const formattedSummary = formatAnalysisResult(result.summary, result.matchPercentage);
+            showSuccessMessage('Ваше резюме успешно проанализировано нейросетью!');
+            
+            const formattedSummary = formatAnalysisResult(result);
             
             resultArea.innerHTML = `
                 <h3>Результат анализа резюме "${file.name}"</h3>
@@ -137,32 +151,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             `;
 
-            addToHistory(file.name, result.matchPercentage, result.job);
+            addToHistory(file.name, result.persent, result.job);
 
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error in processFile:', error, error.stack);
             loading.style.display = 'none';
             resultArea.style.display = 'block';
             resultArea.innerHTML = `
                 <h3>Ошибка</h3>
                 <p>${error.message}</p>
             `;
+            hideSuccessMessage();
         } finally {
             clearInterval(progressInterval);
             progressBar.style.width = '0%';
         }
     }
 
-    function formatAnalysisResult(text, percentage) {
-        // Улучшенное форматирование результатов
-        return text
-            .replace(/### (.*?):/g, '<h4>$1:</h4>')
-            .replace(/\n/g, '<br>')
-            .replace(/(\d+%)/g, '<span class="percentage">$1</span>')
-            .replace(/Соответствие:/g, '<strong>Соответствие:</strong>')
-            .replace(/Уровень \d/g, match => `<span class="skill-level">${match}</span>`)
-            .replace(/Да/g, '<span class="match-yes">Да</span>')
-            .replace(/Нет/g, '<span class="match-no">Нет</span>');
+    function formatAnalysisResult(result) {
+        let skillsList = result.skills && result.skills.length
+            ? '<ul>' + result.skills.map(s => `<li>${s.skill}</li>`).join('') + '</ul>'
+            : '<em>Навыки не найдены</em>';
+        return `
+            <strong>Имя:</strong> ${result.name || 'Не найдено'}<br>
+            <strong>Процент соответствия:</strong> <span class="percentage">${result.persent}%</span><br>
+            <strong>Навыки:</strong> ${skillsList}
+        `;
     }
 
     function addToHistory(filename, percentage, job) {
@@ -182,6 +196,25 @@ document.addEventListener('DOMContentLoaded', function () {
         if (percentage >= 70) return '#4CAF50';
         if (percentage >= 40) return '#FFC107';
         return '#F44336';
+    }
+
+    // Добавляем функцию для показа уведомления
+    function showSuccessMessage(message) {
+        let msgDiv = document.getElementById('successMessage');
+        if (!msgDiv) {
+            msgDiv = document.createElement('div');
+            msgDiv.id = 'successMessage';
+            msgDiv.className = 'success-message';
+            resultArea.parentNode.insertBefore(msgDiv, resultArea);
+        }
+        msgDiv.textContent = message;
+        msgDiv.style.display = 'block';
+    }
+
+    // Скрывать уведомление при ошибке или новой загрузке
+    function hideSuccessMessage() {
+        const msgDiv = document.getElementById('successMessage');
+        if (msgDiv) msgDiv.style.display = 'none';
     }
 
 
