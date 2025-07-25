@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
             loading.style.display = 'none';
             resultArea.style.display = 'block';
             
-            showSuccessMessage('Ваше резюме успешно проанализировано нейросетью!');
+            showSuccessMessage('Ваше резюме успешно проанализировано!');
             
             const formattedSummary = formatAnalysisResult(result);
             
