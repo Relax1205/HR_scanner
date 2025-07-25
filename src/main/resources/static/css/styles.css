@@ -2,25 +2,30 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f0f8ff;
     margin: 0;
+    overflow: hidden; /* Добавлено */
 }
 
 .container {
     display: flex;
+    height: 100vh; /* Добавлено */
 }
 
 .sidebar {
     background-color: #fff;
     width: 320px;
-    height: 100%;
+    height: 100vh;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; /* Добавлено */
 }
 
 .logo {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 120px;
+    margin-bottom: 30px;
 }
 
 .history{
@@ -32,6 +37,9 @@ body {
 .history-list {
     list-style: none;
     padding: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 15px;
 }
 
 .history-list li {
@@ -41,11 +49,19 @@ body {
     border-radius: 8px;
 }
 
+/* Стили для кнопки выхода - прижимаем вниз и поднимаем на 20px */
+.sidebar > form[method="post"]:last-child {
+    margin-top: auto;
+    flex-shrink: 0;
+    margin-bottom: 25px; /* Поднимаем кнопку на 20 пикселей от низа */
+}
+
 .main-content {
     flex-grow: 1;
     padding: 20px;
     background-color: #E8F1FF;
     height: 100vh;
+    overflow-y: auto; /* Добавлено */
 }
 
 .search-area {
@@ -363,6 +379,11 @@ body {
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
+        height: auto;
+    }
+    
+    body {
+        overflow: auto;
     }
     
     .sidebar {
@@ -382,6 +403,11 @@ body {
     
     .job-selector-container {
         width: 100%;
+    }
+    
+    /* Для мобильных устройств кнопка выхода будет не прижата вниз */
+    .sidebar > form[method="post"]:last-child {
+        margin-top: 20px;
     }
 }
 
@@ -430,3 +456,13 @@ body {
     text-align: center;
     letter-spacing: 0.01em;
 }
+
+/* Скрываем скроллбары */
+.sidebar::-webkit-scrollbar,
+.main-content::-webkit-scrollbar,
+.history-list::-webkit-scrollbar,
+.job-description::-webkit-scrollbar,
+.analysis-result::-webkit-scrollbar {
+    display: none;
+}
+
