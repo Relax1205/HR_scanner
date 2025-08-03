@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.hackathon.springcourse.dao.PeopleDAO;
 import ru.hackathon.springcourse.models.People;
+import ru.hackathon.springcourse.services.ServiceWork;
 
 import java.util.List;
 
@@ -14,32 +15,23 @@ import java.util.List;
 public class WebController {
 
     private final PeopleDAO peopleDAO;
+    private final ServiceWork serviceWork;
 
     @Autowired
-    public WebController(PeopleDAO peopleDAO) {
+    public WebController(PeopleDAO peopleDAO, ServiceWork serviceWork) {
         this.peopleDAO = peopleDAO;
+        this.serviceWork = serviceWork;
     }
 
 
     @GetMapping("")
     public String workers(@RequestParam(value = "job", required = false) String job, Model model) {
-        if(job != null) {
-            List<People> peopleList = peopleDAO.findByJob(job);
-            model.addAttribute("peopleList", peopleList);
-            model.addAttribute("job", job);
-
-        }
-        else {
-            List<People> peopleList = peopleDAO.index();
-            model.addAttribute("peopleList", peopleList);
-            model.addAttribute("job", job);
-        }
+        serviceWork.work(job, model);
         return "index";
     }
 
 
-
-    @PostMapping("/{id}")
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
         peopleDAO.delete(id);
         return  "redirect:/go";

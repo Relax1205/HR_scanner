@@ -30,10 +30,10 @@
                 <strong>Успешно:</strong> Вы вышли из системы
             </div>
             
-            <form th:action="@{/login}" method="post" style="margin-top: 20px;">
+            <form th:action="@{/process_login}" method="post" style="margin-top: 20px;">
                 <div style="margin-bottom: 20px;">
-                    <label for="username" style="display:block; margin-bottom:8px; font-weight: 600; color: #333;">Имя пользователя</label>
-                    <input type="text" id="username" name="username" class="job-select" style="width:100%; padding: 12px; font-size: 16px;" placeholder="Введите имя пользователя" required>
+                    <label for="email" style="display:block; margin-bottom:8px; font-weight: 600; color: #333;">Имя пользователя</label>
+                    <input type="text" id="email" name="email" class="job-select" style="width:100%; padding: 12px; font-size: 16px;" placeholder="Введите имя пользователя" required>
                 </div>
                 <div style="margin-bottom: 30px;">
                     <label for="password" style="display:block; margin-bottom:8px; font-weight: 600; color: #333;">Пароль</label>
