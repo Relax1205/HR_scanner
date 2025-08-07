@@ -1,17 +1,16 @@
-/* === 1. Общие стили === */
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f8ff;
     margin: 0;
-    overflow-y: auto; /* Разрешён скролл при необходимости */
+    overflow-y: auto;
 }
 
 .container {
     display: flex;
-    height: 100vh; /* На всю высоту экрана */
+    height: 100vh;
 }
 
-/* === 2. Сайдбар и история === */
+
 .sidebar {
     background-color: #fff;
     width: 320px;
@@ -57,7 +56,7 @@ body {
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* выравнивание по верху */
+    align-items: flex-start;
     transition: background-color 0.2s;
 }
 
@@ -74,9 +73,9 @@ body {
 
 .history-info {
     flex-grow: 1;
-    min-width: 0; /* позволяет text-overflow работать */
+    min-width: 0;
     display: flex;
-    flex-direction: column; /* колонка: filename → job+percentage */
+    flex-direction: column;
 }
 
 .history-filename {
@@ -111,14 +110,12 @@ body {
     color: #2196F3;
 }
 
-/* Кнопка выхода — прижата вниз */
 .sidebar > form[method="post"]:last-child {
     margin-top: auto;
     flex-shrink: 0;
     margin-bottom: 25px;
 }
 
-/* === 3. Основное содержимое === */
 .main-content {
     flex-grow: 1;
     padding: 20px;
@@ -147,7 +144,6 @@ body {
     background: #fff;
 }
 
-/* === 4. Блок анализа вакансии === */
 .data-analytics {
     display: flex;
     gap: 20px;
@@ -194,7 +190,7 @@ body {
     height: 100%;
 }
 
-/* === 5. Загрузка резюме и кнопки === */
+
 .upload-area {
     border: 2px dashed #007bff;
     padding: 40px 20px;
@@ -245,7 +241,6 @@ body {
     outline: none;
 }
 
-/* === 6. Результаты анализа === */
 .loading {
     display: none;
     text-align: center;
@@ -313,7 +308,6 @@ body {
     margin: 10px 0;
 }
 
-/* === 7. Визуальные элементы: проценты, навыки, совпадения === */
 .percentage {
     font-weight: bold;
     color: #2196F3;
@@ -389,7 +383,6 @@ body {
     border-radius: 3px;
 }
 
-/* === 8. Дополнительные стили === */
 .success-message {
     background-color: #e6f9f0;
     color: #207520;
@@ -404,7 +397,6 @@ body {
     letter-spacing: 0.01em;
 }
 
-/* === 9. Анимации === */
 @keyframes progressAnimation {
     0% { width: 0%; }
     100% { width: 100%; }
@@ -414,7 +406,7 @@ body {
     animation: progressAnimation 2s ease-in-out infinite;
 }
 
-/* === 10. Адаптивность (мобильные устройства) === */
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -452,13 +444,12 @@ body {
         padding: 12px 0;
     }
 
-    /* Кнопка выхода — не прижата к низу */
+
     .sidebar > form[method="post"]:last-child {
         margin-top: 20px;
     }
 }
 
-/* === 11. Скрытие скроллбаров (для чистого дизайна) === */
 .sidebar::-webkit-scrollbar,
 .main-content::-webkit-scrollbar,
 .history-list::-webkit-scrollbar,

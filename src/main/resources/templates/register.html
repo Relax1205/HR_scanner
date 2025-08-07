@@ -25,71 +25,27 @@
                 <strong>Ошибка регистрации:</strong> Что-то пошло не так, попробуйте снова.
             </div>
 
-            <form th:action="@{/register}" method="post" style="margin-top: 20px;" onsubmit="return validateForm()">
+            <form th:action="@{/register}" method="post" style="margin-top: 20px;">
                 <div style="margin-bottom: 20px;">
                     <label for="email" style="display:block; margin-bottom:8px; font-weight: 600; color: #333;">Email</label>
-                    <input type="email" id="email" name="email" class="job-select" style="width:100%; padding: 12px; font-size: 16px;" placeholder="Введите ваш email" required />
+                    <input type="email" id="email" name="email" class="job-select" style="width:100%; padding: 12px; font-size: 16px;" placeholder="Введите ваш email">
                 </div>
                 <div style="margin-bottom: 20px;">
                     <label for="password" style="display:block; margin-bottom:8px; font-weight: 600; color: #333;">Пароль</label>
-                    <input type="password" id="password" name="password" class="job-select" style="width:100%; padding: 12px; font-size: 16px;" placeholder="Введите пароль" required />
+                    <input type="password" id="password" name="password" class="job-select" style="width:100%; padding: 12px; font-size: 16px;" placeholder="Введите пароль">
                 </div>
                 <div style="margin-bottom: 30px;">
                     <label for="confirmPassword" style="display:block; margin-bottom:8px; font-weight: 600; color: #333;">Повторить пароль</label>
-                    <input type="password" id="confirmPassword" class="job-select" style="width:100%; padding: 12px; font-size: 16px;" placeholder="Повторите пароль" required />
-                    <div id="passwordError" style="color: #c62828; font-size: 14px; margin-top: 5px; display: none;">
-                        Пароли не совпадают
-                    </div>
+                    <input type="password" id="confirmPassword" class="job-select" style="width:100%; padding: 12px; font-size: 16px;" placeholder="Повторите пароль">
                 </div>
                 <button type="submit" class="add-button" style="width:100%; padding: 15px; font-size: 16px; font-weight: 600;">Зарегистрироваться</button>
             </form>
 
-            <div style="margin-top: 30px; text-align: center; color: #666; font-size: 14px;">
-                <p>Уже есть аккаунт? <a th:href="@{/login}">Войдите в систему</a></p>
+            <div class="login-hint">
+                Уже есть аккаунт? <a th:href="@{/login}">Войдите в систему</a>
             </div>
         </div>
     </main>
 </div>
-
-<script>
-    function validateForm() {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const passwordError = document.getElementById('passwordError');
-
-        if (password !== confirmPassword) {
-            passwordError.style.display = 'block';
-            return false;
-        } else {
-            passwordError.style.display = 'none';
-            return true;
-        }
-    }
-
-    // Валидация в реальном времени
-    document.getElementById('confirmPassword').addEventListener('input', function() {
-        const password = document.getElementById('password').value;
-        const confirmPassword = this.value;
-        const passwordError = document.getElementById('passwordError');
-
-        if (confirmPassword && password !== confirmPassword) {
-            passwordError.style.display = 'block';
-        } else {
-            passwordError.style.display = 'none';
-        }
-    });
-
-    document.getElementById('password').addEventListener('input', function() {
-        const password = this.value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const passwordError = document.getElementById('passwordError');
-
-        if (confirmPassword && password !== confirmPassword) {
-            passwordError.style.display = 'block';
-        } else {
-            passwordError.style.display = 'none';
-        }
-    });
-</script>
 </body>
 </html>
