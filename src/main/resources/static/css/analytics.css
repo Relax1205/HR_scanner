@@ -1,0 +1,97 @@
+.data-analytics {
+    margin: 20px 0;
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.job-selector-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    min-width: 250px;
+}
+.job-select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+.job-description-wrapper {
+    flex-grow: 1;
+    min-width: 0;
+}
+.job-description {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    max-height: 200px;
+    overflow-y: auto;
+    height: 100%;
+}
+.analysis-result {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+    line-height: 1.6;
+}
+.percentage {
+    font-weight: bold;
+    color: #2196F3;
+    font-size: 1.1em;
+}
+.percentage-high {
+    color: #4CAF50;
+}
+.percentage-medium {
+    color: #FFC107;
+}
+.percentage-low {
+    color: #F44336;
+}
+.skill-level {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-right: 5px;
+}
+.skill-level-1 {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+.skill-level-2 {
+    background-color: #bbdefb;
+    color: #0d47a1;
+}
+.skill-level-3 {
+    background-color: #90caf9;
+    color: #082e5a;
+}
+.match-yes {
+    color: #4CAF50;
+    font-weight: bold;
+    padding: 2px 5px;
+    background-color: #e8f5e9;
+    border-radius: 3px;
+}
+.match-no {
+    color: #F44336;
+    font-weight: bold;
+    padding: 2px 5px;
+    background-color: #ffebee;
+    border-radius: 3px;
+}
