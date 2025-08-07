@@ -22,7 +22,7 @@ app.use(fileUpload({
   tempFileDir: path.join(__dirname, 'temp')
 }));
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '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';
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 async function askOpenRouter(prompt) {
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {

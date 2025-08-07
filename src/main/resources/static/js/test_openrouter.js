@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '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'; // Вставь свой ключ или используй .env
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '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'; // Вставь свой ключ или используй .env
 
 (async () => {
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
