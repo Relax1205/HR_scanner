@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход | HR-scanner</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/login-form.css}">
 </head>
 <body>
 <div class="container">
@@ -17,36 +18,30 @@
     </aside>
 
     <main class="main-content">
-        <div class="data-analytics" style="max-width: 500px; margin: 60px auto;">
-            <h2 style="text-align:center; margin-bottom: 30px; color: #333;">Вход в систему</h2>
-            
-            <!-- Сообщение об ошибке -->
-            <div th:if="${param.error}" style="background-color: #ffebee; color: #c62828; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid #ffcdd2;">
-                <strong>Ошибка входа:</strong> Неверное имя пользователя или пароль
-            </div>
-            
-            <!-- Сообщение о выходе -->
-            <div th:if="${param.logout}" style="background-color: #e8f5e8; color: #2e7d32; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid #c8e6c9;">
-                <strong>Успешно:</strong> Вы вышли из системы
-            </div>
-            
-            <form th:action="@{/process_login}" method="post" style="margin-top: 20px;">
-                <div style="margin-bottom: 20px;">
-                    <label for="email" style="display:block; margin-bottom:8px; font-weight: 600; color: #333;">Имя пользователя</label>
-                    <input type="text" id="email" name="email" class="job-select" style="width:100%; padding: 12px; font-size: 16px;" placeholder="Введите имя пользователя" required>
+        <div class="data-analytics">
+            <h2>Вход в систему</h2>
+            <form th:action="@{/process_login}" method="post" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Имя пользователя</label>
+                    <input type="text" id="email" name="email" class="job-select" placeholder="Введите имя пользователя" required>
                 </div>
-                <div style="margin-bottom: 30px;">
-                    <label for="password" style="display:block; margin-bottom:8px; font-weight: 600; color: #333;">Пароль</label>
-                    <input type="password" id="password" name="password" class="job-select" style="width:100%; padding: 12px; font-size: 16px;" placeholder="Введите пароль" required>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" class="job-select" placeholder="Введите пароль" required>
                 </div>
-                <button type="submit" class="add-button" style="width:100%; padding: 15px; font-size: 16px; font-weight: 600;">Войти в систему</button>
+                <button type="submit" class="add-button">Войти в систему</button>
             </form>
-            
-            <div style="margin-top: 30px; text-align: center; color: #666; font-size: 14px;">
+            <div class="login-messages">
+                <div th:if="${param.error}" class="login-error">
+                    <strong>Ошибка входа:</strong> Неверное имя пользователя или пароль
+                </div>
+            </div>
+            <div class="login-hint">
                 <p>Используйте данные для входа, предоставленные администратором</p>
             </div>
         </div>
     </main>
 </div>
+<script th:src="@{/js/login-form.js}"></script>
 </body>
 </html> 

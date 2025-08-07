@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HR-scanner</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/analytics.css}">
+    <link rel="stylesheet" th:href="@{/css/upload.css}">
 </head>
 <body>
 <div class="container">
@@ -23,12 +26,10 @@
                 </form>
             </li>
         </ol>
-        <!-- Кнопка выхода -->
-        <form th:action="@{/logout}" method="post" style="margin-top: 20px;">
-            <button type="submit" style="width: 100%; padding: 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; ">Выйти</button>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-button">Выйти</button>
         </form>
     </aside>
-
     <main class="main-content">
         <div class="search-area">
             <input type="text" placeholder="Поиск" />
@@ -44,11 +45,9 @@
                     <option value="tech_analyst" th:selected="${job == 'tech_analyst'}">Технический аналитик в ИИ</option>
                     <option value="data_engineer" th:selected="${job == 'data_engineer'}">Инженер данных</option>
                 </select>
-
             </div>
             <div class="job-description-wrapper">
                 <div class="job-description" id="jobDescription">
-                    <!-- Thymeleaf может сюда вставлять описание -->
                     <p th:text="${jobDescription}">Описание профессии появится здесь</p>
                 </div>
             </div>
@@ -59,26 +58,36 @@
             <input type="file" id="fileInput" class="upload-input" accept=".doc,.docx,.pdf" />
             <label for="fileInput" class="upload-button">Загрузить</label>
         </div>
-        <div class="loading" id="loading" style="display: none;">
+        <div class="loading" id="loading">
             <p>Анализируем резюме...</p>
             <div class="progress-bar">
                 <div class="progress" id="progressBar"></div>
             </div>
         </div>
         <div class="result-area" id="resultArea">
-
             <div th:if="${result != null}">
                 <p th:text="${result}">Результат анализа появится здесь</p>
             </div>
         </div>
+        <template id="analysisResultTemplate">
+            <h3>Результат анализа резюме <span class="filename"></span></h3>
+            <h4>Вакансия: <span class="job-title"></span></h4>
+            <div class="analysis-result">
+                <strong>Имя:</strong> <span class="candidate-name"></span><br>
+                <strong>Процент соответствия:</strong> <span class="percentage"></span><br>
+                <strong>Навыки:</strong> <span class="skills-list"></span>
+            </div>
+        </template>
+        <template id="historyItemTemplate">
+            <li>
+                <span class="history-number"></span>
+                <span class="history-filename"></span>
+                <span class="history-job"></span>
+                <span class="history-percentage"></span>
+            </li>
+        </template>
     </main>
 </div>
-<script>
-    document.getElementById('jobSelect').addEventListener('change', function () {
-        const job = this.value;
-        window.location.href = '/go?job=' + encodeURIComponent(job);
-    });
-</script>
 <script th:src="@{/js/script.js}"></script>
 </body>
 </html>
