@@ -34,3 +34,5 @@ build/
 node_modules
 .env
 test_openrouter.js
+data.json
+
