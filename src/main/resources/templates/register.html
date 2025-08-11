@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Регистрация | HR-scanner</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
 </head>
 <body>
 <div class="container">
@@ -17,33 +18,27 @@
     </aside>
 
     <main class="main-content">
-        <div class="data-analytics" style="max-width: 500px; margin: 60px auto;">
-            <h2 style="text-align:center; margin-bottom: 30px; color: #333;">Регистрация нового пользователя</h2>
+        <div class="data-analytics">
+            <h2>Регистрация нового пользователя</h2>
 
             <!-- Сообщение об ошибке -->
-            <div th:if="${param.error}" style="background-color: #ffebee; color: #c62828; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid #ffcdd2;">
+            <div th:if="${param.error}" class="error-message">
                 <strong>Ошибка регистрации:</strong> Что-то пошло не так, попробуйте снова.
             </div>
 
-            <form th:action="@{/register}" th:object="${userForm}" method="post" style="margin-top: 20px;">
-                <div style="margin-bottom: 20px;">
+            <form th:action="@{/register}" method="post" class="register-form">
+                <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" th:field="*{email}" id="email" class="job-select" placeholder="Введите ваш email" />
-                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red;"></div>
+                    <input type="email" id="email" name="email" class="job-select" placeholder="Введите ваш email">
                 </div>
-
-                <div style="margin-bottom: 20px;">
+                <div class="form-group">
                     <label for="password">Пароль</label>
-                    <input type="password" th:field="*{password}" id="password" class="job-select" placeholder="Введите пароль" />
-                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red;"></div>
+                    <input type="password" id="password" name="password" class="job-select" placeholder="Введите пароль">
                 </div>
-
-                <div style="margin-bottom: 30px;">
+                <div class="form-group">
                     <label for="confirmPassword">Повторить пароль</label>
-                    <input type="password" th:field="*{confirmPassword}" id="confirmPassword" class="job-select" placeholder="Повторите пароль" />
-                    <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" style="color:red;"></div>
+                    <input type="password" id="confirmPassword" class="job-select" placeholder="Повторите пароль">
                 </div>
-
                 <button type="submit" class="add-button">Зарегистрироваться</button>
             </form>
 
