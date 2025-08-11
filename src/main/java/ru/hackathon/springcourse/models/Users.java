@@ -2,6 +2,7 @@
 
 
     import jakarta.persistence.*;
+    import jakarta.validation.constraints.NotBlank;
 
     @Entity
     @Table(name="users")
@@ -11,12 +12,15 @@
         @Column(name="id")
         private int id;
 
+        @NotBlank(message = "Email не может быть пустым")
         @Column(name="email")
         private String email;
 
+        @NotBlank(message = "Пароль не может быть пустым")
         @Column(name="password")
         private String password;
 
+        @NotBlank(message = "Повторите пароль")
         @Transient
         private String confirmPassword;
 
