@@ -51,12 +51,13 @@
                 </div>
             </div>
         </div>
-        <div class="upload-area" id="uploadArea">
+        <form action="/go/update" method="post" enctype="multipart/form-data" class="upload-area" id="uploadArea">
             <p>Перетащи, загрузи или вставь</p>
             <p>Поддерживаемые форматы: DOC, DOCX, PDF</p>
-            <input type="file" id="fileInput" class="upload-input" accept=".doc,.docx,.pdf" />
+
+            <input type="file" id="fileInput" name="file" class="upload-input" accept=".doc,.docx,.pdf" required />
             <label for="fileInput" class="upload-button">Загрузить</label>
-        </div>
+        </form>
         <div class="loading" id="loading">
             <p>Анализируем резюме...</p>
             <div class="progress-bar">
