@@ -1,87 +1,27 @@
 {
-  "name": "Романов Никита Сергеевич",
+  "name": "Акунин Алексей Давыдович",
   "job": "analyst",
-  "persent": 40,
+  "persent": 70,
   "skills": [
     {
-      "skill": "SQL"
+      "skill": "C++"
+    },
+    {
+      "skill": "Java"
+    },
+    {
+      "skill": "Javascript"
     },
     {
       "skill": "Python"
     },
     {
-      "skill": "PostgreSQL"
+      "skill": "PHP"
     },
     {
-      "skill": "Git"
-    },
-    {
-      "skill": "GitHub"
-    },
-    {
-      "skill": "Работа с базами данных"
-    },
-    {
-      "skill": "Bash"
-    },
-    {
-      "skill": "Docker"
-    },
-    {
-      "skill": "React"
-    },
-    {
-      "skill": "Администрирование серверов"
-    },
-    {
-      "skill": "SQL запросы"
-    },
-    {
-      "skill": "Linux"
-    },
-    {
-      "skill": "Ansible"
-    },
-    {
-      "skill": "Kubernetes"
-    },
-    {
-      "skill": "CI/CD"
-    },
-    {
-      "skill": "Terraform"
-    },
-    {
-      "skill": "Nginx"
-    },
-    {
-      "skill": "Yandex Cloud"
-    },
-    {
-      "skill": "DevOps"
-    },
-    {
-      "skill": "NoSQL"
-    },
-    {
-      "skill": "Jenkins"
-    },
-    {
-      "skill": "GitLab CI"
-    },
-    {
-      "skill": "Docker-compose"
-    },
-    {
-      "skill": "Grafana"
-    },
-    {
-      "skill": "Zabbix"
-    },
-    {
-      "skill": "Prometheus"
+      "skill": "Английский (технический)"
     }
   ],
-  "experience": null,
-  "education": "Неоконченное высшее, МИРЭА — Российский технологический университет, Институт информационных технологий, Программная инженерия"
+  "experience": "Ведущий программист в ООО «АНТРАС» (6 лет 7 месяцев): контроль отдела, разработка веб-сервисов, анализ и оптимизация кода, разработка CRM, проведение собеседований, участие в крупных проектах, выступления на конференциях.",
+  "education": "Московский государственный университет им. М. В. Ломоносова, Прикладная математика (2010)"
 }

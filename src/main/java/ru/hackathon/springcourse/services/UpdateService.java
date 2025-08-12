@@ -20,13 +20,13 @@ public class UpdateService {
 
     public People trans_json() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        People people = objectMapper.readValue(new File("src/main/temp_json/data.json"), People.class);
+        People people = objectMapper.readValue(new File("src/main/resources/static/json_results/data.json"), People.class);
         return people;
     }
 
     public void v_trans_json() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        People people = objectMapper.readValue(new File("src/main/temp_json/data.json"), People.class);
+        People people = objectMapper.readValue(new File("src/main/resources/static/json_results/data.json"), People.class);
         System.out.println("Saving person: " + people);
         peopleDAO.save(people);
     }

@@ -58,5 +58,11 @@ public class PeopleDAO {
         if (people != null) {
             entityManager.remove(people);
         }
+
+    }
+    public People findCurrent() {
+        return entityManager.createQuery("SELECT p FROM People p ORDER BY p.id DESC", People.class)
+                .setMaxResults(1)
+                .getSingleResult();
     }
 }

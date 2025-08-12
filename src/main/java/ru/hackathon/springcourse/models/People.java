@@ -1,10 +1,12 @@
 package ru.hackathon.springcourse.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import ru.hackathon.springcourse.models.Skills;
 
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name="people")
 public class People{
