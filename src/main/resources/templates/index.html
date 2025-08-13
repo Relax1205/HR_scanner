@@ -60,9 +60,8 @@
             <label for="fileInput" class="upload-button">Загрузить</label>
         </form>
 
-        <form id="updateJsonForm" action="/go/update-json" method="post" style="margin-top: 10px;" th:action="@{/go/update-json}" th:method="post">
+        <form id="updateJsonForm" action="/go/update-json" method="post" style="display: none;" th:action="@{/go/update-json}" th:method="post">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <button type="submit" class="upload-button">JSON</button>
         </form>
 
         <div class="loading" id="loading">
