@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const historyList = document.getElementById('historyList');
     const jobSelect = document.getElementById('jobSelect');
     const jobDescription = document.getElementById('jobDescription');
+    const updateJsonForm = document.getElementById('updateJsonForm');
 
     const jobTitles = {
         analyst: 'Аналитик данных',
@@ -147,6 +148,15 @@ document.addEventListener('DOMContentLoaded', function () {
             resultArea.appendChild(formattedSummary);
 
             addToHistory(file.name, result.persent, result.job);
+
+            // Автоматически отправляем форму JSON для сохранения результатов в БД
+            if (updateJsonForm) {
+                try {
+                    updateJsonForm.submit();
+                } catch (e) {
+                    console.error('Не удалось автоматически отправить форму update-json:', e);
+                }
+            }
 
         } catch (error) {
             console.error('Error in processFile:', error, error.stack);

@@ -1,27 +1,78 @@
 {
-  "name": "Акунин Алексей Давыдович",
+  "name": "Романов Никита Сергеевич",
   "job": "analyst",
-  "persent": 70,
+  "persent": 60,
   "skills": [
     {
-      "skill": "C++"
-    },
-    {
-      "skill": "Java"
-    },
-    {
-      "skill": "Javascript"
+      "skill": "SQL"
     },
     {
       "skill": "Python"
     },
     {
-      "skill": "PHP"
+      "skill": "PostgreSQL"
     },
     {
-      "skill": "Английский (технический)"
+      "skill": "Git"
+    },
+    {
+      "skill": "GitHub"
+    },
+    {
+      "skill": "Работа с базами данных"
+    },
+    {
+      "skill": "Bash"
+    },
+    {
+      "skill": "Docker"
+    },
+    {
+      "skill": "Linux"
+    },
+    {
+      "skill": "Ansible"
+    },
+    {
+      "skill": "Kubernetes"
+    },
+    {
+      "skill": "CI/CD"
+    },
+    {
+      "skill": "Terraform"
+    },
+    {
+      "skill": "Nginx"
+    },
+    {
+      "skill": "Yandex Cloud"
+    },
+    {
+      "skill": "DevOps"
+    },
+    {
+      "skill": "NoSQL"
+    },
+    {
+      "skill": "Jenkins"
+    },
+    {
+      "skill": "GitLab CI"
+    },
+    {
+      "skill": "Docker-compose"
+    },
+    {
+      "skill": "Grafana"
+    },
+    {
+      "skill": "Zabbix"
+    },
+    {
+      "skill": "Prometheus"
     }
   ],
-  "experience": "Ведущий программист в ООО «АНТРАС» (6 лет 7 месяцев): контроль отдела, разработка веб-сервисов, анализ и оптимизация кода, разработка CRM, проведение собеседований, участие в крупных проектах, выступления на конференциях.",
-  "education": "Московский государственный университет им. М. В. Ломоносова, Прикладная математика (2010)"
+  "experience": null,
+  "education": "Неоконченное высшее, МИРЭА — Российский технологический университет, Институт информационных технологий, Программная инженерия"
 }
