@@ -144,17 +144,40 @@ document.addEventListener('DOMContentLoaded', function () {
             showSuccessMessage('Ваше резюме успешно проанализировано!');
             
             const formattedSummary = formatAnalysisResult(result);
-            
             resultArea.appendChild(formattedSummary);
 
-            addToHistory(file.name, result.persent, result.job);
-
-            // Автоматически отправляем форму JSON для сохранения результатов в БД
+            // Автоматически отправляем данные в БД без перезагрузки страницы
             if (updateJsonForm) {
                 try {
-                    updateJsonForm.submit();
+                    const csrfInput = updateJsonForm.querySelector('input[type="hidden"]');
+                    const csrfName = csrfInput ? csrfInput.getAttribute('name') : '_csrf';
+                    const csrfToken = csrfInput ? csrfInput.value : '';
+                    const actionUrl = updateJsonForm.getAttribute('action') || '/go/update-json';
+
+                    const formBody = new URLSearchParams({ [csrfName]: csrfToken }).toString();
+
+                    const saveResponse = await fetch(actionUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: formBody
+                    });
+
+                    if (!saveResponse.ok) {
+                        throw new Error('Ошибка сохранения в БД');
+                    }
+
+                    const saved = await saveResponse.json();
+
+                    // Добавляем в историю как раньше: номер, имя файла, вакансия, процент, кнопка удалить
+                    addToHistoryWithDelete(saved.id, file.name, result.persent, result.job);
+                    // Ничего дополнительно не показываем при успехе сохранения в БД
                 } catch (e) {
-                    console.error('Не удалось автоматически отправить форму update-json:', e);
+                    console.error('Не удалось автоматически отправить результат в БД:', e);
+                    try { alert('Ошибка сохранения в БД'); } catch (_) {}
                 }
             }
 
@@ -208,6 +231,62 @@ document.addEventListener('DOMContentLoaded', function () {
         percentSpan.textContent = percentage + '%';
         percentSpan.className = 'history-percentage ' + getPercentageClass(percentage);
         historyList.appendChild(template);
+    }
+
+    function addToHistoryWithDelete(id, filename, percentage, job) {
+        const li = document.createElement('li');
+        const numberSpan = document.createElement('span');
+        numberSpan.className = 'history-number';
+        numberSpan.textContent = (historyList.children.length + 1) + '.';
+        li.appendChild(numberSpan);
+
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'history-info';
+        const fileSpan = document.createElement('span');
+        fileSpan.className = 'history-filename';
+        fileSpan.textContent = filename;
+        infoDiv.appendChild(fileSpan);
+        const detailsDiv = document.createElement('div');
+        detailsDiv.className = 'history-details';
+        const jobSpan = document.createElement('span');
+        jobSpan.className = 'history-job';
+        jobSpan.textContent = jobTitles[job] || job;
+        const percentSpan = document.createElement('span');
+        percentSpan.className = 'history-percentage ' + getPercentageClass(percentage);
+        percentSpan.textContent = percentage + '%';
+        detailsDiv.appendChild(jobSpan);
+        detailsDiv.appendChild(percentSpan);
+        infoDiv.appendChild(detailsDiv);
+        li.appendChild(infoDiv);
+
+        // Кнопка удалить как на серверной стороне (метод DELETE /go/{id})
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.action = '/go/' + id;
+        form.style.display = 'inline';
+        const methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'delete';
+        form.appendChild(methodInput);
+
+        // CSRF
+        const csrfInput = updateJsonForm ? updateJsonForm.querySelector('input[type="hidden"]') : null;
+        if (csrfInput) {
+            const csrfClone = document.createElement('input');
+            csrfClone.type = 'hidden';
+            csrfClone.name = csrfInput.getAttribute('name');
+            csrfClone.value = csrfInput.value;
+            form.appendChild(csrfClone);
+        }
+
+        const delButton = document.createElement('button');
+        delButton.type = 'submit';
+        delButton.textContent = 'Удалить';
+        form.appendChild(delButton);
+        li.appendChild(form);
+
+        historyList.appendChild(li);
     }
     function getPercentageClass(percentage) {
         if (percentage >= 70) return 'percentage-high';

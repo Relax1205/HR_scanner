@@ -22,12 +22,66 @@
       "skill": "Работа с базами данных"
     },
     {
+      "skill": "Bash"
+    },
+    {
+      "skill": "Docker"
+    },
+    {
+      "skill": "React"
+    },
+    {
+      "skill": "Администрирование серверов"
+    },
+    {
       "skill": "SQL запросы"
     },
     {
       "skill": "Linux"
+    },
+    {
+      "skill": "Ansible"
+    },
+    {
+      "skill": "Kubernetes"
+    },
+    {
+      "skill": "CI/CD"
+    },
+    {
+      "skill": "Terraform"
+    },
+    {
+      "skill": "Nginx"
+    },
+    {
+      "skill": "Yandex Cloud"
+    },
+    {
+      "skill": "DevOps"
+    },
+    {
+      "skill": "NoSQL"
+    },
+    {
+      "skill": "Jenkins"
+    },
+    {
+      "skill": "GitLab CI"
+    },
+    {
+      "skill": "Docker-compose"
+    },
+    {
+      "skill": "Grafana"
+    },
+    {
+      "skill": "Zabbix"
+    },
+    {
+      "skill": "Prometheus"
     }
   ],
   "experience": null,
-  "education": "Неоконченное высшее, МИРЭА — Российский технологический университет, Институт информационных технологий, Программная инженерия (2027)"
+  "education": "Неоконченное высшее, МИРЭА — Российский технологический университет, Институт информационных технологий, Программная инженерия"
 }

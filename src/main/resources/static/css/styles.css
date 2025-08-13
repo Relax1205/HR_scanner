@@ -52,16 +52,19 @@ body {
 .history-list li {
     margin: 8px 0;
     padding: 12px 15px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .history-list li:hover {
-    background-color: #e9ecef;
+    background-color: #f0f8ff;
+    border-color: #dbe7ff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.06);
 }
 
 .history-number {
@@ -103,17 +106,47 @@ body {
 }
 
 .history-percentage {
-    font-weight: bold;
-    min-width: 50px;
-    text-align: right;
-    margin-left: 10px;
-    color: #2196F3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    min-width: 30px;
+    text-align: center;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    background: #eef2f7;
+    color: #2c3e50;
+    border: 1px solid #e2e8f0;
+    font-size: 0.9em;
 }
 
 .sidebar > form[method="post"]:last-child {
     margin-top: auto;
     flex-shrink: 0;
     margin-bottom: 25px;
+}
+
+/* Кнопка Удалить в истории */
+.history-list li form button {
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.history-list li form button:hover,
+.history-list li form button:focus {
+    background: #fff5f5;
+    border-color: #dc3545;
+    color: #b52a37;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.08);
+    outline: none;
 }
 
 .main-content {
@@ -309,9 +342,18 @@ body {
 }
 
 .percentage {
-    font-weight: bold;
-    color: #2196F3;
-    font-size: 1.1em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95em;
+    padding: 2px 10px;
+    min-width: 44px;
+    text-align: center;
+    border-radius: 9999px;
+    background: #eef2f7;
+    color: #2c3e50;
+    border: 1px solid #e2e8f0;
 }
 
 .percentage-high {
@@ -324,6 +366,40 @@ body {
 
 .percentage-low {
     color: #F44336;
+}
+
+/* Badge colors for percentage levels (result area) */
+.percentage.percentage-high {
+    background: #e8f5e9;
+    border-color: #c8e6c9;
+    color: #2e7d32;
+}
+.percentage.percentage-medium {
+    background: #fff8e1;
+    border-color: #ffe0b2;
+    color: #ff8f00;
+}
+.percentage.percentage-low {
+    background: #ffebee;
+    border-color: #ffcdd2;
+    color: #c62828;
+}
+
+/* Badge colors for percentage levels (history list) */
+.history-percentage.percentage-high {
+    background: #e8f5e9;
+    border-color: #c8e6c9;
+    color: #2e7d32;
+}
+.history-percentage.percentage-medium {
+    background: #fff8e1;
+    border-color: #ffe0b2;
+    color: #ff8f00;
+}
+.history-percentage.percentage-low {
+    background: #ffebee;
+    border-color: #ffcdd2;
+    color: #c62828;
 }
 
 .skill-level {

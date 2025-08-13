@@ -2,6 +2,8 @@ package ru.hackathon.springcourse.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +15,10 @@ import ru.hackathon.springcourse.services.UpdateService;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/go")
@@ -73,7 +78,7 @@ public class WebController {
     }
 
     @PostMapping("/update-json")
-    public String updateFromJson() {
+    public Object updateFromJson(HttpServletRequest request) {
         try {
             File jsonFile = new File("src/main/resources/static/json_results/data.json");
 
@@ -84,9 +89,29 @@ public class WebController {
             peopleDAO.save(person);
 
             System.out.println("JSON успешно сохранён в БД: " + person.getName());
+
+            String accept = request.getHeader("Accept");
+            String xrw = request.getHeader("X-Requested-With");
+            if ((accept != null && accept.contains("application/json")) ||
+                    (xrw != null && xrw.equalsIgnoreCase("XMLHttpRequest"))) {
+                Map<String, Object> payload = new HashMap<>();
+                payload.put("id", person.getId());
+                payload.put("name", person.getName());
+                payload.put("job", person.getJob());
+                payload.put("persent", person.getPersent());
+                return new ResponseEntity<>(payload, HttpStatus.OK);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Ошибка при сохранении JSON в БД");
+            String accept = request.getHeader("Accept");
+            String xrw = request.getHeader("X-Requested-With");
+            if ((accept != null && accept.contains("application/json")) ||
+                    (xrw != null && xrw.equalsIgnoreCase("XMLHttpRequest"))) {
+                Map<String, String> error = new HashMap<>();
+                error.put("error", "Ошибка при сохранении JSON в БД");
+                return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
 
         return "redirect:/go";
