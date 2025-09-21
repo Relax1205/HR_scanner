@@ -1,38 +1,30 @@
-services:
-  # 1. PostgreSQL Database
+databases:
   - name: postgres-db
-    type: psql
-    plan: free # The free plan includes a persistent disk
+    plan: free
 
-  # 2. Backend Service (Java)
+services:
+  # Backend Service (Java)
   - name: backend-app
     type: web
-    plan: free # Using the free plan to start
+    plan: free
     env: docker
-    # Point to the Docker image from ghcr.io
     image:
       url: ghcr.io/relax1205/hr_scanner/backend:latest
-    # Environment Variables
     envVars:
-      # The DB connection string is automatically provided by Render
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
           name: postgres-db
           property: connectionString
-      # The secret key needs to be added in the Render dashboard
       - key: OPENROUTER_API_KEY
         sync: false
 
-  # 3. Frontend Service (Node.js)
+  # Frontend Service (Node.js)
   - name: frontend-app
     type: web
-    plan: free # Using the free plan to start
+    plan: free
     env: docker
-    # Point to the Docker image from ghcr.io
     image:
       url: ghcr.io/relax1205/hr_scanner/frontend:latest
-    # Environment Variables
     envVars:
-      # The secret key needs to be added in the Render dashboard
       - key: OPENROUTER_API_KEY
         sync: false
