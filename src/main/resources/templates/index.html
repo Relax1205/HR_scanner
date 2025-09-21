@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR-scanner</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/analytics.css}">
+    <link rel="stylesheet" th:href="@{/css/upload.css}">
+</head>
+<body>
+<div class="container">
+    <aside class="sidebar">
+        <a href="#" class="logo-link">
+            <img th:src="@{/logo.png}" alt="HR Scanner Logo">
+        </a>
+        <div class="logo">HR-scaner</div>
+        <div class="history">История</div>
+        <ol class="history-list" id="historyList">
+            <li th:each="person, iterStat : ${peopleList}">
+                <span th:text="${iterStat.index + 1 + '. ' + person.name + ' ' + person.persent + '%'}">1. Имя 0%</span>
+                <form th:action="@{/go/{id}(id=${person.id})}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit">Удалить</button>
+                </form>
+            </li>
+        </ol>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-button">Выйти</button>
+        </form>
+    </aside>
+    <main class="main-content">
+        <div class="search-area">
+            <input type="text" placeholder="Вставьте URL-вакансии" />
+            <button class="add-button">Добавить</button>
+        </div>
+        <div class="data-analytics">
+            <div class="job-selector-container">
+                <label for="jobSelect">Выберите профессию:</label>
+                <select name="job" id="jobSelect" class="job-select">
+                    <option value="analyst" th:selected="${job == 'analyst'}">Аналитик данных</option>
+                    <option value="manager" th:selected="${job == 'manager'}">Менеджер в ИИ</option>
+                    <option value="tech_analyst" th:selected="${job == 'tech_analyst'}">Технический аналитик в ИИ</option>
+                    <option value="data_engineer" th:selected="${job == 'data_engineer'}">Инженер данных</option>
+                </select>
+            </div>
+            <div class="job-description-wrapper">
+                <div class="job-description" id="jobDescription">
+                    <p th:text="${jobDescription}">Описание профессии появится здесь</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Форма загрузки файла -->
+        <form action="/go/update" method="post" enctype="multipart/form-data" class="upload-area" id="uploadArea">
+            <p>Перетащи, загрузи или вставь</p>
+            <p>Поддерживаемые форматы: DOC, DOCX, PDF</p>
+            <input type="file" id="fileInput" name="file" class="upload-input" accept=".doc,.docx,.pdf" required />
+            <label for="fileInput" class="upload-button">Загрузить</label>
+        </form>
+
+        <form id="updateJsonForm" action="/go/update-json" method="post" style="display: none;" th:action="@{/go/update-json}" th:method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        </form>
+
+        <div class="loading" id="loading">
+            <p>Анализируем резюме...</p>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+        </div>
+        <div class="result-area" id="resultArea">
+            <div th:if="${result != null}">
+                <p th:text="${result}">Результат анализа появится здесь</p>
+            </div>
+        </div>
+        <template id="analysisResultTemplate">
+            <h3>Результат анализа резюме <span class="filename"></span></h3>
+            <h4>Вакансия: <span class="job-title"></span></h4>
+            <div class="analysis-result">
+                <strong>Имя:</strong> <span class="candidate-name"></span><br>
+                <strong>Процент соответствия:</strong> <span class="percentage"></span><br>
+                <strong>Навыки:</strong> <span class="skills-list"></span>
+            </div>
+        </template>
+        <template id="historyItemTemplate">
+            <li>
+                <span class="history-number"></span>
+                <div class="history-info">
+                    <span class="history-filename"></span>
+                    <div class="history-details">
+                        <span class="history-job"></span>
+                        <span class="history-percentage"></span>
+                    </div>
+                </div>
+            </li>
+        </template>
+    </main>
+</div>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

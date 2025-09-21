@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Регистрация | HR-scanner</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
+</head>
+<body>
+<div class="container">
+    <aside class="sidebar">
+        <a href="#" class="logo-link">
+            <img th:src="@{/logo.png}" alt="HR Scanner Logo" />
+        </a>
+        <div class="logo">HR-scanner</div>
+        <div class="history">Регистрация</div>
+    </aside>
+
+    <main class="main-content">
+        <div class="data-analytics">
+            <h2>Регистрация нового пользователя</h2>
+
+            <!-- Сообщение об ошибке -->
+            <div th:if="${param.error}" class="error-message">
+                <strong>Ошибка регистрации:</strong> Что-то пошло не так, попробуйте снова.
+            </div>
+
+            <form th:action="@{/register}" method="post" class="register-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="job-select" placeholder="Введите ваш email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" class="job-select" placeholder="Введите пароль">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Повторить пароль</label>
+                    <input type="password" id="confirmPassword" class="job-select" placeholder="Повторите пароль">
+                </div>
+                <button type="submit" class="add-button">Зарегистрироваться</button>
+            </form>
+
+            <div class="login-hint">
+                Уже есть аккаунт? <a th:href="@{/login}">Войдите в систему</a>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

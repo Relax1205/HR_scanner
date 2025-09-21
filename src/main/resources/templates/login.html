@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход | HR-scanner</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/login-form.css}">
+</head>
+<body>
+<div class="container">
+    <aside class="sidebar">
+        <a href="#" class="logo-link">
+            <img th:src="@{/logo.png}" alt="HR Scanner Logo">
+        </a>
+        <div class="logo">HR-scaner</div>
+        <div class="history">Вход в систему</div>
+    </aside>
+
+    <main class="main-content">
+        <div class="data-analytics">
+            <h2>Вход в систему</h2>
+            <form th:action="@{/process_login}" method="post" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Имя пользователя</label>
+                    <input type="text" id="email" name="email" class="job-select" placeholder="Введите имя пользователя">
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" class="job-select" placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="add-button">Войти в систему</button>
+            </form>
+            <button class="add-button" style="margin-top: 18px; width: 100%;" onclick="window.location.href='/register'">Зарегистрироваться</button>
+            <div class="login-messages">
+                <div th:if="${param.error}" class="login-error">
+                    <strong>Ошибка входа:</strong> Неверное имя пользователя или пароль
+                </div>
+            </div>
+            <div class="login-hint">
+                <p>Используйте данные для входа, предоставленные администратором</p>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html> 

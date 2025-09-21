@@ -1,0 +1,66 @@
+{
+  "name": "Дицель Никита Сергеевич",
+  "job": "analyst",
+  "persent": 40,
+  "skills": [
+    {
+      "skill": "Python"
+    },
+    {
+      "skill": "JavaScript"
+    },
+    {
+      "skill": "TypeScript"
+    },
+    {
+      "skill": "Java"
+    },
+    {
+      "skill": "Flask"
+    },
+    {
+      "skill": "REST API"
+    },
+    {
+      "skill": "SQLite"
+    },
+    {
+      "skill": "PostgreSQL"
+    },
+    {
+      "skill": "MongoDB"
+    },
+    {
+      "skill": "Git"
+    },
+    {
+      "skill": "GitHub"
+    },
+    {
+      "skill": "GitLab"
+    },
+    {
+      "skill": "GitHub Actions"
+    },
+    {
+      "skill": "Gitlab CI/CD"
+    },
+    {
+      "skill": "Jenkins"
+    },
+    {
+      "skill": "Docker"
+    },
+    {
+      "skill": "docker-compose"
+    },
+    {
+      "skill": "Kubernetes"
+    },
+    {
+      "skill": "Helm"
+    }
+  ],
+  "experience": "Разработка full-stack веб-приложений, руководство командой, реализация систем авторизации и управления состоянием",
+  "education": "Бакалавриат по программной инженерии в РТУ МИРЭА, курсы по фронтенд-разработке и DevOps"
+}
