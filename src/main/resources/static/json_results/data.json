@@ -1,7 +1,7 @@
 {
   "name": "Дицель Никита Сергеевич",
   "job": "analyst",
-  "persent": 40,
+  "persent": 35,
   "skills": [
     {
       "skill": "Python"
@@ -20,6 +20,15 @@
     },
     {
       "skill": "REST API"
+    },
+    {
+      "skill": "HTML"
+    },
+    {
+      "skill": "CSS"
+    },
+    {
+      "skill": "React"
     },
     {
       "skill": "SQLite"
@@ -43,7 +52,7 @@
       "skill": "GitHub Actions"
     },
     {
-      "skill": "Gitlab CI/CD"
+      "skill": "Gitlab Ci/CD"
     },
     {
       "skill": "Jenkins"
@@ -59,8 +68,29 @@
     },
     {
       "skill": "Helm"
+    },
+    {
+      "skill": "TensorFlow"
+    },
+    {
+      "skill": "Redux Toolkit"
+    },
+    {
+      "skill": "Cypress"
+    },
+    {
+      "skill": "Webpack"
+    },
+    {
+      "skill": "Storybook"
+    },
+    {
+      "skill": "Vite"
+    },
+    {
+      "skill": "Jest"
     }
   ],
-  "experience": "Разработка full-stack веб-приложений, руководство командой, реализация систем авторизации и управления состоянием",
-  "education": "Бакалавриат по программной инженерии в РТУ МИРЭА, курсы по фронтенд-разработке и DevOps"
+  "experience": "Разработка full-stack веб-приложения Garbage Classifier и многостраничного приложения Stellar Burger, руководство командой, реализация авторизации и управления состоянием",
+  "education": "РТУ МИРЭА, бакалавриат по программной инженерии (2023-2027), курсы Яндекс.Практикум и Ростелеком"
 }
