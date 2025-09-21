@@ -1,16 +1,34 @@
 {
-  "name": "Романов Никита Сергеевич",
+  "name": "Дицель Никита Сергеевич",
   "job": "analyst",
-  "persent": 30,
+  "persent": 40,
   "skills": [
-    {
-      "skill": "SQL"
-    },
     {
       "skill": "Python"
     },
     {
+      "skill": "JavaScript"
+    },
+    {
+      "skill": "TypeScript"
+    },
+    {
+      "skill": "Java"
+    },
+    {
+      "skill": "Flask"
+    },
+    {
+      "skill": "REST API"
+    },
+    {
+      "skill": "SQLite"
+    },
+    {
       "skill": "PostgreSQL"
+    },
+    {
+      "skill": "MongoDB"
     },
     {
       "skill": "Git"
@@ -19,69 +37,30 @@
       "skill": "GitHub"
     },
     {
-      "skill": "Работа с базами данных"
+      "skill": "GitLab"
     },
     {
-      "skill": "Bash"
+      "skill": "GitHub Actions"
     },
     {
-      "skill": "Docker"
-    },
-    {
-      "skill": "React"
-    },
-    {
-      "skill": "Администрирование серверов"
-    },
-    {
-      "skill": "SQL запросы"
-    },
-    {
-      "skill": "Linux"
-    },
-    {
-      "skill": "Ansible"
-    },
-    {
-      "skill": "Kubernetes"
-    },
-    {
-      "skill": "CI/CD"
-    },
-    {
-      "skill": "Terraform"
-    },
-    {
-      "skill": "Nginx"
-    },
-    {
-      "skill": "Yandex Cloud"
-    },
-    {
-      "skill": "DevOps"
-    },
-    {
-      "skill": "NoSQL"
+      "skill": "Gitlab CI/CD"
     },
     {
       "skill": "Jenkins"
     },
     {
-      "skill": "GitLab CI"
+      "skill": "Docker"
     },
     {
-      "skill": "Docker-compose"
+      "skill": "docker-compose"
     },
     {
-      "skill": "Grafana"
+      "skill": "Kubernetes"
     },
     {
-      "skill": "Zabbix"
-    },
-    {
-      "skill": "Prometheus"
+      "skill": "Helm"
     }
   ],
-  "experience": null,
-  "education": "Неоконченное высшее, МИРЭА — Российский технологический университет, Институт информационных технологий, Программная инженерия"
+  "experience": "Разработка full-stack веб-приложений, руководство командой, реализация систем авторизации и управления состоянием",
+  "education": "Бакалавриат по программной инженерии в РТУ МИРЭА, курсы по фронтенд-разработке и DevOps"
 }
