@@ -1,0 +1,18 @@
+# Use a slim Node.js image
+FROM node:20-slim
+
+# Set the working directory
+WORKDIR /app/src/main/resources/static/js
+
+# Copy package files and install dependencies
+COPY src/main/resources/static/js/package.json src/main/resources/static/js/package-lock.json* ./
+RUN npm install
+
+# Copy the rest of the application code
+COPY src/main/resources/static/js/ .
+
+# Expose the port the app runs on
+EXPOSE 3001
+
+# Command to run the application
+CMD ["node", "server.js"]

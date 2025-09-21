@@ -60,7 +60,7 @@ public class WebController {
     @PostMapping("/update")
     public String creatNewResum(@RequestParam("file") MultipartFile file) throws IOException {
         try {
-            File jsonFile = new File("src/main/resources/static/json_results/data.json");
+            File jsonFile = new File("/data/data.json");
 
             ObjectMapper mapper = new ObjectMapper();
             People person = mapper.readValue(jsonFile, People.class);
@@ -80,7 +80,7 @@ public class WebController {
     @PostMapping("/update-json")
     public Object updateFromJson(HttpServletRequest request) {
         try {
-            File jsonFile = new File("src/main/resources/static/json_results/data.json");
+            File jsonFile = new File("/data/data.json");
 
             ObjectMapper mapper = new ObjectMapper();
             People person = mapper.readValue(jsonFile, People.class);

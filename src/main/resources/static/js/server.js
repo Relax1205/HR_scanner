@@ -163,7 +163,7 @@ ${shortResume}`;
     console.log('✅ Parsed result:', result);
 
     // Сохраняем результат в data.json
-    const outPath = path.join(__dirname, '../json_results/data.json');
+    const outPath = '/data/data.json';
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, JSON.stringify(result, null, 2), 'utf-8');
     console.log('💾 Result saved to', outPath);

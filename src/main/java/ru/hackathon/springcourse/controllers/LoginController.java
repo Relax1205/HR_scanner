@@ -1,5 +1,7 @@
 package ru.hackathon.springcourse.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,7 @@ import ru.hackathon.springcourse.validator.ValidForm;
 @Controller
 public class LoginController {
 
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     private final UserService userService;
     private final ValidForm validForm;
 
@@ -37,11 +40,20 @@ public class LoginController {
     public String registerUser(@ModelAttribute("userForm") Users userForm,
                                BindingResult bindingResult, Model model) {
 
+        logger.info("Attempting to register user with email: {}", userForm.getEmail());
         validForm.valid(bindingResult,userForm);
         if (bindingResult.hasErrors()) {
+            logger.warn("Registration validation failed for email: {}. Errors: {}", userForm.getEmail(), bindingResult.getAllErrors());
             return "register"; // Показываем ошибки на той же странице
         }
-        userService.saveUser(userForm);
+        try {
+            userService.saveUser(userForm);
+            logger.info("Successfully called saveUser for email: {}", userForm.getEmail());
+        } catch (Exception e) {
+            logger.error("Error saving user with email: {}", userForm.getEmail(), e);
+            model.addAttribute("registrationError", "An unexpected error occurred during registration.");
+            return "register";
+        }
         return "redirect:/login";
     }
 } 
