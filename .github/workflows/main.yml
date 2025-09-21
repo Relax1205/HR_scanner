@@ -68,22 +68,9 @@ jobs:
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
-    # This job is a placeholder for your deployment strategy.
-    # It will only run if the build-and-push job succeeds.
-    # You need to configure secrets in your repository for this to work.
-    # Example for deploying to a server via SSH:
-    # env:
-    #   SSH_USER: ${{ secrets.SSH_USER }}
-    #   SSH_HOST: ${{ secrets.SSH_HOST }}
-    #   SSH_KEY: ${{ secrets.SSH_KEY }}
     steps:
-      - name: Deploy to production server
-        run: |
-          echo "Deployment step needs to be configured."
-          echo "For example, you could SSH into your server and run docker-compose."
-          # Example commands:
-          # ssh -o StrictHostKeyChecking=no -i $SSH_KEY $SSH_USER@$SSH_HOST '\
-          #   cd /path/to/your/project && \
-          #   docker-compose pull && \
-          #   docker-compose up -d \
-          # '
+      - name: Trigger Render Deploy for Backend
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}
+
+      - name: Trigger Render Deploy for Frontend
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}

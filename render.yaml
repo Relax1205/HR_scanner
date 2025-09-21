@@ -1,0 +1,40 @@
+services:
+  # 1. База данных PostgreSQL
+  - name: postgres-db
+    type: psql
+    plan: free # Используем бесплатный план для начала
+    pvs: # Включаем постоянное хранилище
+      size: 1
+
+  # 2. Бэкенд сервис (Java)
+  - name: backend-app
+    type: web
+    plan: free # Используем бесплатный план для начала
+    env: docker
+    # Указываем, какой Docker-образ использовать из ghcr.io
+    image:
+      url: ghcr.io/relax1205/hr_scanner/backend:latest
+    # Переменные окружения
+    envVars:
+      # URL для подключения к БД Render предоставит автоматически
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: postgres-db
+          property: connectionString
+      # Секретный ключ нужно будет добавить в панели Render
+      - key: OPENROUTER_API_KEY
+        sync: false
+
+  # 3. Фронтенд сервис (Node.js)
+  - name: frontend-app
+    type: web
+    plan: free # Используем бесплатный план для начала
+    env: docker
+    # Указываем, какой Docker-образ использовать из ghcr.io
+    image:
+      url: ghcr.io/relax1205/hr_scanner/frontend:latest
+    # Переменные окружения
+    envVars:
+      # Секретный ключ нужно будет добавить в панели Render
+      - key: OPENROUTER_API_KEY
+        sync: false
