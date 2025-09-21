@@ -33,3 +33,6 @@ build/
 .vscode/
 node_modules
 test_openrouter.js
+
+# Ignore all .env files
+**/.env
