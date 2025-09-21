@@ -101,13 +101,19 @@
 			<artifactId>pdfbox</artifactId>
 			<version>2.0.29</version>
 		</dependency>
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20231013</version>
-		</dependency>
-    </dependencies>
-
+		        <dependency>
+		            <groupId>org.json</groupId>
+		            <artifactId>json</artifactId>
+		            <version>20231013</version>
+		        </dependency>
+		
+		        <!-- H2 Database for testing -->
+		        <dependency>
+		            <groupId>com.h2database</groupId>
+		            <artifactId>h2</artifactId>
+		            <scope>test</scope>
+		        </dependency>
+		    </dependencies>
 	<build>
 		<plugins>
 			<plugin>
