@@ -79,7 +79,7 @@ jobs:
           push: true
           tags: ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/frontend:${{ github.sha }}
 
-    deploy-to-k8s:
+  deploy-to-k8s:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
@@ -107,7 +107,7 @@ jobs:
           echo "OWNER_LC=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
           echo "REPO_LC=$(echo ${{ github.event.repository.name }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
 
-      - name: Load Docker images into kind
+      - name: Pull and load images into kind
         run: |
           docker pull ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/backend:${{ github.sha }}
           docker pull ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/frontend:${{ github.sha }}
@@ -116,9 +116,11 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          # Сначала создадим ресурсы
           kubectl apply -f k8s/
-          # Затем обновим образы (на случай, если deployment уже существует)
           kubectl set image deployment/backend backend=ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/backend:${{ github.sha }} -n default
           kubectl set image deployment/frontend frontend=ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/frontend:${{ github.sha }} -n default
-          
+
+      - name: Verify deployment (optional)
+        run: |
+          kubectl get pods -n default
+          kubectl get services -n default
