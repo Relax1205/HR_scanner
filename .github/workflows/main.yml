@@ -80,8 +80,12 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
+      # These steps trigger deployment hooks on Render.
+      # Make sure you have set up the following secrets in your GitHub repository settings:
+      # RENDER_DEPLOY_HOOK_BACKEND
+      # RENDER_DEPLOY_HOOK_FRONTEND
       - name: Trigger Render Deploy for Backend
-        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}"
 
       - name: Trigger Render Deploy for Frontend
-        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}"
