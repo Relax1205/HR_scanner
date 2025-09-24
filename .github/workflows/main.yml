@@ -79,7 +79,7 @@ jobs:
           push: true
           tags: ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/frontend:${{ github.sha }}
 
-  deploy-to-k8s:
+    deploy-to-k8s:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
@@ -91,24 +91,34 @@ jobs:
         with:
           version: 'v1.29.0'
 
-      - name: Configure kubectl
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-        run: |
-          echo "$KUBE_CONFIG_DATA" > kubeconfig.yaml
-          export KUBECONFIG=kubeconfig.yaml
-          kubectl config view
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.10.0
+        with:
+          version: v0.23.0
+          config: |
+            kind: Cluster
+            apiVersion: kind.x-k8s.io/v1alpha4
+            nodes:
+            - role: control-plane
 
       - name: Set lower case owner and repo name
         id: string
         run: |
           echo "OWNER_LC=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
           echo "REPO_LC=$(echo ${{ github.event.repository.name }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-      
-      - name: Deploy to Kubernetes
-        env:
-          KUBECONFIG: kubeconfig.yaml
+
+      - name: Load Docker images into kind
         run: |
+          docker pull ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/backend:${{ github.sha }}
+          docker pull ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/frontend:${{ github.sha }}
+          kind load docker-image ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/backend:${{ github.sha }}
+          kind load docker-image ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/frontend:${{ github.sha }}
+
+      - name: Deploy to Kubernetes
+        run: |
+          # Сначала создадим ресурсы
+          kubectl apply -f k8s/
+          # Затем обновим образы (на случай, если deployment уже существует)
           kubectl set image deployment/backend backend=ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/backend:${{ github.sha }} -n default
           kubectl set image deployment/frontend frontend=ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/frontend:${{ github.sha }} -n default
-          kubectl apply -k k8s/
+          
