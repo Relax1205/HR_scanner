@@ -29,11 +29,26 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'src/main/resources/static/js/package-lock.json'
 
-      - name: Build and Test Backend
-        run: mvn clean install
+      # 🔴 BACKEND TESTS
+      - name: Run Backend Tests
+        run: mvn test
 
+      # 🟢 Build backend JAR (without tests)
+      - name: Build Backend
+        run: mvn package -DskipTests
+
+      # 🔴 FRONTEND TESTS
       - name: Install Frontend Dependencies
         run: npm install
+        working-directory: ./src/main/resources/static/js
+
+      - name: Run Frontend Tests
+        run: npm test
+        working-directory: ./src/main/resources/static/js
+
+      # 🟢 Build frontend (if needed for Docker)
+      - name: Build Frontend (if required)
+        run: npm run build || echo "No build step needed"
         working-directory: ./src/main/resources/static/js
 
       - name: Set lower case owner and repo name

@@ -36,3 +36,5 @@ test_openrouter.js
 
 # Ignore all .env files
 **/.env
+
+.example.env
