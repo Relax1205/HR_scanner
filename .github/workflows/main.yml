@@ -85,9 +85,9 @@ jobs:
       # RENDER_DEPLOY_HOOK_BACKEND
       # RENDER_DEPLOY_HOOK_FRONTEND
       - name: Trigger Render Deploy for Backend
-        if: ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND != '' }}
+        if: ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}
         run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}"
 
       - name: Trigger Render Deploy for Frontend
-        if: ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND != '' }}
+        if: ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}
         run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}"
