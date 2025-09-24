@@ -79,30 +79,36 @@ jobs:
           push: true
           tags: ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/frontend:${{ github.sha }}
 
-  deploy:
+  deploy-to-k8s:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Render Deploy for Backend
-        env:
-          DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}
-        run: |
-          if [ -z "$DEPLOY_HOOK" ]; then
-            echo "❌ Secret RENDER_DEPLOY_HOOK_BACKEND is not set!"
-            echo "Go to: GitHub → Settings → Secrets and variables → Actions"
-            exit 1
-          fi
-          echo "✅ Triggering backend deploy..."
-          curl -X POST "$DEPLOY_HOOK"
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Trigger Render Deploy for Frontend
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.29.0'
+
+      - name: Configure kubectl
         env:
-          DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         run: |
-          if [ -z "$DEPLOY_HOOK" ]; then
-            echo "❌ Secret RENDER_DEPLOY_HOOK_FRONTEND is not set!"
-            echo "Go to: GitHub → Settings → Secrets and variables → Actions"
-            exit 1
-          fi
-          echo "✅ Triggering frontend deploy..."
-          curl -X POST "$DEPLOY_HOOK"
+          echo "$KUBE_CONFIG_DATA" > kubeconfig.yaml
+          export KUBECONFIG=kubeconfig.yaml
+          kubectl config view
+
+      - name: Set lower case owner and repo name
+        id: string
+        run: |
+          echo "OWNER_LC=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "REPO_LC=$(echo ${{ github.event.repository.name }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+      
+      - name: Deploy to Kubernetes
+        env:
+          KUBECONFIG: kubeconfig.yaml
+        run: |
+          kubectl set image deployment/backend backend=ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/backend:${{ github.sha }} -n default
+          kubectl set image deployment/frontend frontend=ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/frontend:${{ github.sha }} -n default
+          kubectl apply -k k8s/
