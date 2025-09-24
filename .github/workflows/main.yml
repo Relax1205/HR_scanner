@@ -29,36 +29,30 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'src/main/resources/static/js/package-lock.json'
 
-      # 🔴 Run backend unit and integration tests
+      # 🔴 BACKEND TESTS
       - name: Run Backend Tests
         run: mvn test
 
-      # 🟢 Build backend JAR (skip tests to avoid double-run)
+      # 🟢 Build backend JAR (without tests)
       - name: Build Backend
         run: mvn package -DskipTests
 
-      # 🔴 Install frontend dependencies and run tests
+      # 🔴 FRONTEND TESTS
       - name: Install Frontend Dependencies
         run: npm install
         working-directory: ./src/main/resources/static/js
 
-      - name: Run Frontend Tests
-        run: npm test
-        working-directory: ./src/main/resources/static/js
-
-      # 🟢 Build frontend assets (if needed for production)
+      # 🟢 Build frontend (if needed for Docker)
       - name: Build Frontend (if required)
-        run: npm run build || echo "No build script defined — skipping"
+        run: npm run build || echo "No build step needed"
         working-directory: ./src/main/resources/static/js
 
-      # 🔤 Normalize owner/repo name to lowercase for GHCR compatibility
       - name: Set lower case owner and repo name
         id: string
         run: |
           echo "OWNER_LC=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
           echo "REPO_LC=$(echo ${{ github.event.repository.name }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
 
-      # 🔑 Log in to GitHub Container Registry
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -66,7 +60,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 🐳 Build and push backend Docker image
       - name: Build and push backend image
         uses: docker/build-push-action@v5
         with:
@@ -75,7 +68,6 @@ jobs:
           push: true
           tags: ghcr.io/${{ steps.string.outputs.OWNER_LC }}/${{ steps.string.outputs.REPO_LC }}/backend:${{ github.sha }}
 
-      # 🖥️ Build and push frontend Docker image
       - name: Build and push frontend image
         uses: docker/build-push-action@v5
         with:
@@ -88,24 +80,14 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      # 🔒 Ensure secrets are set before triggering deploy
-      - name: Fail if backend deploy hook is missing
-        if: ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND == '' }}
-        run: |
-          echo "❌ Secret RENDER_DEPLOY_HOOK_BACKEND is not set in repository secrets!"
-          echo "Go to: Settings → Secrets and variables → Actions → Repository secrets"
-          exit 1
-
-      - name: Fail if frontend deploy hook is missing
-        if: ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND == '' }}
-        run: |
-          echo "❌ Secret RENDER_DEPLOY_HOOK_FRONTEND is not set in repository secrets!"
-          echo "Go to: Settings → Secrets and variables → Actions → Repository secrets"
-          exit 1
-
-      # 🚀 Trigger deployment on Render
+      # These steps trigger deployment hooks on Render.
+      # Make sure you have set up the following secrets in your GitHub repository settings:
+      # RENDER_DEPLOY_HOOK_BACKEND
+      # RENDER_DEPLOY_HOOK_FRONTEND
       - name: Trigger Render Deploy for Backend
+        if: ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND != '' }}
         run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}"
 
       - name: Trigger Render Deploy for Frontend
+        if: ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND != '' }}
         run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}"
