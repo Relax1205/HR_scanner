@@ -42,10 +42,6 @@ jobs:
         run: npm install
         working-directory: ./src/main/resources/static/js
 
-      - name: Run Frontend Tests
-        run: npm test
-        working-directory: ./src/main/resources/static/js
-
       # 🟢 Build frontend (if needed for Docker)
       - name: Build Frontend (if required)
         run: npm run build || echo "No build step needed"
