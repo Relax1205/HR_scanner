@@ -6,7 +6,7 @@ WORKDIR /app/src/main/resources/static/js
 
 # Copy package files and install dependencies
 COPY src/main/resources/static/js/package.json src/main/resources/static/js/package-lock.json* ./
-RUN npm install
+RUN npm ci --omit=dev
 
 # Copy the rest of the application code
 COPY src/main/resources/static/js/ .

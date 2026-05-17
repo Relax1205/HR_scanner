@@ -1,0 +1,12 @@
+.git
+.github
+.mvn
+target
+**/target
+**/node_modules
+
+src/main/resources/static/js/temp
+
+.env
+**/.env
+.example.env
